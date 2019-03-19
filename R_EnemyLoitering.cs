@@ -44,7 +44,7 @@ public class R_EnemyLoitering : MonoBehaviour
             cnt = 0;
         }
 
-        Debug.Log(cnt);
+        //Debug.Log(cnt);
         moveEnemy(moveArray[cnt]);//移動処理
     }
 
@@ -74,11 +74,11 @@ public class R_EnemyLoitering : MonoBehaviour
         transform.position += new Vector3(vector.x, vector.y, 0f);
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (LayerMask.LayerToName(other.gameObject.layer) == "R_Player")
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 
