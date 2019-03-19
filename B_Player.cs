@@ -142,7 +142,7 @@ public class B_Player : MonoBehaviour
 
             if (enemyHit_up || enemyHit_right || enemyHit_down || enemyHit_left)
             {
-                enemyHitFlg = true;
+                PlayerStan();
             }
         }
 
@@ -166,6 +166,18 @@ public class B_Player : MonoBehaviour
             speed = 0.035f;
             statusUpFlg = false;
             CT = 10.0f;
+        }
+    }
+
+    //敵にぶつかると一定時間硬直する
+    void PlayerStan()
+    {
+        enemyHitFlg = true;
+
+        if(0 >= 3.0f - Time.time)
+        {
+            enemyHitFlg = false;
+            Debug.Log("スタン終了");
         }
     }
 

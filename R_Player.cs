@@ -168,4 +168,16 @@ public class R_Player : MonoBehaviour
         }
     }
 
+    //敵にぶつかると一定時間硬直する
+    void PlayerStan()
+    {
+        enemyHitFlg = true;
+
+        if (0 >= 3.0f - Time.time)
+        {
+            enemyHitFlg = false;
+            Debug.Log("スタン終了");
+        }
+    }
+
 }
