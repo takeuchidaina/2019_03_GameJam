@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyLoitering : MonoBehaviour
 {
 
-    int[] moveArray = new int[20] { 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 6, 6, 6, 6 };
+    int[] moveArray = new int[18] { 2, 2, 2, 2, 4, 4, 4, 4, 4, 8, 8, 8, 8, 6, 6, 6, 6, 6 };
     int cnt;
     int cntcnt;
     float speed;
@@ -14,10 +14,10 @@ public class EnemyLoitering : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int[] moveArray = new int[20] { 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 8, 8, 8, 8, 8, 8, 6, 6, 6, 6 };
-        int cnt = 0;
+        int[] moveArray = new int[18] { 2, 2, 2, 2, 4, 4, 4, 4, 4, 8, 8, 8, 8, 6, 6, 6, 6, 6 };
+        /*int cnt = 0;
         int cntcnt = 0;
-        float speed = 0.05f;
+        float speed = 0.05f;*/
         Vector3 vector= new Vector3(0f,0f,0f);
     }
 
@@ -25,17 +25,18 @@ public class EnemyLoitering : MonoBehaviour
 void Update()
     {
         cntcnt++;
-        if (cntcnt >= 10)
+        if (cntcnt >= 20)
         {
             cntcnt = 0;
             cnt++;
-        }        
-        Debug.Log(cnt);
-        moveEnemy(moveArray[cnt]);
-        if (cnt > 18)
+        }
+        if (cnt > 17)
         {
             cnt = 0;
         }
+
+        Debug.Log(cnt);
+        moveEnemy(moveArray[cnt]);
     }
 
     void moveEnemy(int num)
@@ -44,19 +45,19 @@ void Update()
         {
             case 2:
                 vector.x = 0f;
-                vector.y = -0.1f;
+                vector.y = -0.05f;
                 break;
             case 4:
-                vector.x = -0.1f;
+                vector.x = -0.05f;
                 vector.y = 0f;
                 break;
             case 6:
-                vector.x = 0.1f;
+                vector.x = 0.05f;
                 vector.y = 0f;
                 break;
             case 8:
                 vector.x = 0f;
-                vector.y = 0.1f;
+                vector.y = 0.05f;
                 break;
             default:
                 break;
