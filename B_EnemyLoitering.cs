@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyLoitering : MonoBehaviour
+public class B_EnemyLoitering : MonoBehaviour
 {
     int[] moveArray = new int[38] {//テンキー方向と一緒のベクトル
-        2, 2, 2, 2, 2, 2, 2, 2,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
         8, 8, 8, 8, 8, 8, 8, 8,
-        6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
+        6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+        2, 2, 2, 2, 2, 2, 2, 2,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4
     };
     int cnt;
     int cntcnt;//cntを1増やす用のcnt
@@ -18,20 +18,20 @@ public class EnemyLoitering : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int[] moveArray = new int[38] {
-        2, 2, 2, 2, 2, 2, 2, 2,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        int[] moveArray = new int[38] {//テンキー方向と一緒のベクトル
         8, 8, 8, 8, 8, 8, 8, 8,
-        6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
+        6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+        2, 2, 2, 2, 2, 2, 2, 2,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4
     };
         /*int cnt = 0;
         int cntcnt = 0;
         float speed = 0.05f;*/
-        Vector3 vector = new Vector3(0f,0f,0f);
+        Vector3 vector = new Vector3(0f, 0f, 0f);
     }
 
-// Update is called once per frame
-void Update()
+    // Update is called once per frame
+    void Update()
     {
         cntcnt++;
         if (cntcnt >= 9)
@@ -71,6 +71,16 @@ void Update()
             default:
                 break;
         }
-        transform.position += new Vector3(vector.x,vector.y,0f);
+        transform.position += new Vector3(vector.x, vector.y, 0f);
     }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (LayerMask.LayerToName(other.gameObject.layer) == "B_Player")
+        {
+            Destroy(this);
+        }
+    }
+
 }
+
