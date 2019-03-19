@@ -14,6 +14,8 @@ public class B_Player : MonoBehaviour
     private bool playerHit_down;
     private bool playerHit_left;
 
+    private bool statusUpFlg;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,7 @@ public class B_Player : MonoBehaviour
         playerHit_right = false;
         playerHit_down = false;
         playerHit_left = false;
+        statusUpFlg = false;
     }
 
     // Update is called once per frame
@@ -38,6 +41,12 @@ public class B_Player : MonoBehaviour
         PlayerMove();
 
         PlayerHit();
+
+        if(statusUpFlg == true)
+        {
+            StatusUpCoolTime();
+        }
+
     }
 
     void PlayerMove()
@@ -68,19 +77,19 @@ public class B_Player : MonoBehaviour
     {
         playerHit_up = Physics2D.Raycast(
      transform.position, Vector2.up,
-     0.5f, 1 << LayerMask.NameToLayer("B_Player"));
+     0.6f, 1 << LayerMask.NameToLayer("R_Player"));
 
         playerHit_right = Physics2D.Raycast(
     transform.position, Vector2.right,
-    0.5f, 1 << LayerMask.NameToLayer("B_Player"));
+    0.6f, 1 << LayerMask.NameToLayer("R_Player"));
 
         playerHit_down = Physics2D.Raycast(
     transform.position, Vector2.down,
-    0.5f, 1 << LayerMask.NameToLayer("B_Player"));
+    0.6f, 1 << LayerMask.NameToLayer("R_Player"));
 
         playerHit_left = Physics2D.Raycast(
     transform.position, Vector2.left,
-    0.5f, 1 << LayerMask.NameToLayer("B_Player"));
+    0.6f, 1 << LayerMask.NameToLayer("R_Player"));
 
         if (playerHit_up || playerHit_right || playerHit_down || playerHit_left)
         {
@@ -96,6 +105,24 @@ public class B_Player : MonoBehaviour
     //バフ
     void PlayerStatusUp()
     {
-        speed = 0.05f;
+
+        if(statusUpFlg == false)
+        {
+            statusUpFlg = true;
+            speed = 0.05f;
+        }
+
+    }
+
+    //バフのクールタイム
+    void StatusUpCoolTime()
+    {
+        //CT 15秒
+        //終わったらフラグをfalseにしてスピードを0.02fにする
+        if (0 >= 15.0f - Time.time)
+        {
+            Debug.Log("CT終了");
+            speed = 0.02f;
+        }
     }
 }

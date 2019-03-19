@@ -70,19 +70,19 @@ public class R_Player : MonoBehaviour
     {
         playerHit_up = Physics2D.Raycast(
      transform.position, Vector2.up,
-     0.5f, 1 << LayerMask.NameToLayer("B_Player"));
+     0.6f, 1 << LayerMask.NameToLayer("B_Player"));
 
         playerHit_right = Physics2D.Raycast(
     transform.position, Vector2.right,
-    0.5f, 1 << LayerMask.NameToLayer("B_Player"));
+    0.6f, 1 << LayerMask.NameToLayer("B_Player"));
 
         playerHit_down = Physics2D.Raycast(
     transform.position, Vector2.down,
-    0.5f, 1 << LayerMask.NameToLayer("B_Player"));
+    0.6f, 1 << LayerMask.NameToLayer("B_Player"));
 
         playerHit_left = Physics2D.Raycast(
     transform.position, Vector2.left,
-    0.5f, 1 << LayerMask.NameToLayer("B_Player"));
+    0.6f, 1 << LayerMask.NameToLayer("B_Player"));
 
         if (playerHit_up || playerHit_right || playerHit_down || playerHit_left)
         {

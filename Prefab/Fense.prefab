@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 96037714375603489}
   - component: {fileID: 7903407564613429404}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Fense
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

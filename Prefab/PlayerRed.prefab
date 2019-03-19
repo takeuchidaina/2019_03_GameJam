@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2843751855030203126}
   - component: {fileID: 161078088875046941}
   - component: {fileID: 161078088875046940}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5965899417177658644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.080182, y: -3.54173, z: -17.814453}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 0.99, y: 0.9, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
