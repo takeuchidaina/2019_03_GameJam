@@ -41,7 +41,7 @@ public class B_Player : MonoBehaviour
 
         move_x = 0.0f;
         move_y = 0.0f;
-        buffSpeed = 0.05f;
+        buffSpeed = 0.08f;
         defaultSpeed = 0.03f;
         speed = defaultSpeed;
 
@@ -51,7 +51,7 @@ public class B_Player : MonoBehaviour
         playerHit_left = false;
 
         statusUpFlg = false;
-        buffTime = 8.0f;
+        buffTime = 5.0f;
         enemyHitFlg = false;
         stanTime = 3.0f;
 
@@ -133,19 +133,19 @@ public class B_Player : MonoBehaviour
     {
         playerHit_up = Physics2D.Raycast(
         transform.position, Vector2.up,
-        0.6f, 1 << LayerMask.NameToLayer("R_Player"));
+        0.5f, 1 << LayerMask.NameToLayer("R_Player"));
 
         playerHit_right = Physics2D.Raycast(
         transform.position, Vector2.right,
-        0.6f, 1 << LayerMask.NameToLayer("R_Player"));
+        0.5f, 1 << LayerMask.NameToLayer("R_Player"));
 
         playerHit_down = Physics2D.Raycast(
         transform.position, Vector2.down,
-        0.6f, 1 << LayerMask.NameToLayer("R_Player"));
+        0.5f, 1 << LayerMask.NameToLayer("R_Player"));
 
         playerHit_left = Physics2D.Raycast(
         transform.position, Vector2.left,
-        0.6f, 1 << LayerMask.NameToLayer("R_Player"));
+        0.5f, 1 << LayerMask.NameToLayer("R_Player"));
 
         //当たっているなら
         if (playerHit_up || playerHit_right || playerHit_down || playerHit_left)
@@ -187,6 +187,7 @@ public class B_Player : MonoBehaviour
         if (LayerMask.LayerToName(other.gameObject.layer) == "R_Enemy")
         {
             enemyHitFlg = true;
+            Debug.Log("敵と当たった");
         }
     }
 }
