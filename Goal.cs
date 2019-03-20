@@ -31,10 +31,27 @@ public class Goal : MonoBehaviour
         if (LayerMask.LayerToName(other.gameObject.layer) == "R_Player")
         {
             R_PlayerInGoal = true;
+            //Debug.Log("Rめう");
         }
         if (LayerMask.LayerToName(other.gameObject.layer) == "B_Player")
         {
             B_PlayerInGoal = true;
+            //Debug.Log("Bめう");
         }
     }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (LayerMask.LayerToName(other.gameObject.layer) == "R_Player")
+        {
+            R_PlayerInGoal = false;
+            //Debug.Log("Rめうめう");
+        }
+        if (LayerMask.LayerToName(other.gameObject.layer) == "B_Player")
+        {
+            B_PlayerInGoal = false;
+            //Debug.Log("Bめうめう");
+        }
+    }
+
 }

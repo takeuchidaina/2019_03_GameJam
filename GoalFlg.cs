@@ -46,6 +46,8 @@ public class GoalFlg : MonoBehaviour
         if (R_EnemyDestoryFlg == true && B_EnemyDestoryFlg == true)
         {
             Debug.Log("めうめうめう");
+            GameObject obj = GameObject.Find("GoalFront");
+            Destroy(obj);
         }
 
     }
