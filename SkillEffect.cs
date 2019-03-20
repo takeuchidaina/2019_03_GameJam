@@ -43,11 +43,11 @@ public class SkillEffect : MonoBehaviour {
 	public void CutIn(){
        
 		sequence_r.Append(r_player.DOLocalMove(movePos_r, 0.5f).OnComplete(() => audio.PlayOneShot(audio.clip)));
-		sequence_r.Append(r_player.DOScale(new Vector3(1.01f, 1.01f, 1.01f), 3.0f));
+		sequence_r.Append(r_player.DOScale(new Vector3(1.01f, 1.01f, 1.01f), 1.5f));
 		sequence_r.Append(r_player.DOLocalMove(movePos_r1, 0.5f));
 
         sequence_b.Append(b_player.DOLocalMove(movePos_b, 0.5f));
-        sequence_b.Append(b_player.DOScale(new Vector3(1.01f, 1.01f, 1.01f), 3.0f));
+        sequence_b.Append(b_player.DOScale(new Vector3(1.01f, 1.01f, 1.01f), 1.5f));
         sequence_b.Append(b_player.DOLocalMove(movePos_b1, 0.5f));
         
 		sequence_r.Play(); 
