@@ -32,6 +32,8 @@ public class R_Player : MonoBehaviour
     private bool enemyHitFlg;
     private float stanTime;
 
+    [SerializeField] private Goal goal;
+
 
     // Start is called before the first frame update
     void Start()
@@ -161,8 +163,12 @@ public class R_Player : MonoBehaviour
     void StatusUpStart()
     {
         speed = buffSpeed;
-        effect.Init();
-        effect.CutIn();
+        if (!goal.GoalFlg)
+        {
+            effect.Init();
+            effect.CutIn();
+        }
+
     }
 
     //バフ終了
