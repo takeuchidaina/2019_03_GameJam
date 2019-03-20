@@ -21,7 +21,7 @@ public class Goal : MonoBehaviour
         if(R_PlayerInGoal == true && B_PlayerInGoal == true)
         {
             Debug.Log("ゲームクリア―");
-            //SceneManager.LoadScene("GameClear");
+            SceneManager.LoadScene("GameClear");
         }
     }
 

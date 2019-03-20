@@ -9,7 +9,7 @@ public class Button : MonoBehaviour
     //MainGameシーンに移動
     public void StartButton()
     {   
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("InGame");
     }
 
     //Manualボタンを押したとき
