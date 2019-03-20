@@ -6,20 +6,24 @@ public class B_Player : MonoBehaviour
 {
     public static B_Player instance;
 
+    //移動
     private float move_x;
     private float move_y;
     private float speed;
-    private float CT;
+    private float defaultSpeed;
+
+    //プレイヤー同士の当たり判定
     private bool playerHit_up;
     private bool playerHit_right;
     private bool playerHit_down;
     private bool playerHit_left;
-    private bool enemyHit_up;
-    private bool enemyHit_right;
-    private bool enemyHit_down;
-    private bool enemyHit_left;
+
+    //バフ
     private bool statusUpFlg;
+
+    //スタン
     private bool enemyHitFlg;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -28,64 +32,73 @@ public class B_Player : MonoBehaviour
 
         move_x = 0.0f;
         move_y = 0.0f;
-        speed = 0.035f;  //スピード
-
-        CT = 15.0f;     //クールタイム
+        defaultSpeed = 0.035f;
+        speed = defaultSpeed;
 
         playerHit_up = false;
         playerHit_right = false;
         playerHit_down = false;
         playerHit_left = false;
-        enemyHit_up = false;
-        enemyHit_right = false;
-        enemyHit_down = false;
-        enemyHit_left = false;
 
-        statusUpFlg = false;    //バフがかかっているかどうか
+        statusUpFlg = false;
         enemyHitFlg = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //初期化
         move_x = 0.0f;
         move_y = 0.0f;
 
-        PlayerMove();
+        //移動
+        if (enemyHitFlg == false)
+        {
+            PlayerMove();
 
-        PlayerHit();
+            if(statusUpFlg == false)
+            {
+                //プレイヤー同士の当たり判定
+                PlayerHit();
+            }
+        }
+        //硬直
+        else
+        {
+            //スタン
+        }
 
+        //速度アップ
         if (statusUpFlg == true)
         {
-            StatusUpCoolTime();
+            //バフ
         }
 
+        Debug.Log("buffのフラグ"+statusUpFlg);
     }
 
-    //十字移動
+    //移動操作
     void PlayerMove()
     {
-        if(enemyHitFlg == false)
+        if (Input.GetKey(KeyCode.UpArrow))
         {
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                move_y = speed;
-            }
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                move_x = speed;
-            }
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                move_y = -speed;
-            }
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                move_x = -speed;
-            }
+            move_y = speed;
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            move_x = speed;
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            move_y = -speed;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            move_x = -speed;
         }
 
-
+        //移動の加算
         transform.position += new Vector3(move_x, move_y, 0);
 
     }
@@ -93,92 +106,28 @@ public class B_Player : MonoBehaviour
     //プレイヤー同士の当たり判定
     void PlayerHit()
     {
-        if (statusUpFlg == false)
+        playerHit_up = Physics2D.Raycast(
+        transform.position, Vector2.up,
+        0.6f, 1 << LayerMask.NameToLayer("R_Player"));
+
+        playerHit_right = Physics2D.Raycast(
+        transform.position, Vector2.right,
+        0.6f, 1 << LayerMask.NameToLayer("R_Player"));
+
+        playerHit_down = Physics2D.Raycast(
+        transform.position, Vector2.down,
+        0.6f, 1 << LayerMask.NameToLayer("R_Player"));
+
+        playerHit_left = Physics2D.Raycast(
+        transform.position, Vector2.left,
+        0.6f, 1 << LayerMask.NameToLayer("R_Player"));
+
+        //当たっているなら
+        if (playerHit_up || playerHit_right || playerHit_down || playerHit_left)
         {
-            playerHit_up = Physics2D.Raycast(
-            transform.position, Vector2.up,
-            0.6f, 1 << LayerMask.NameToLayer("R_Player"));
-
-            playerHit_right = Physics2D.Raycast(
-            transform.position, Vector2.right,
-            0.6f, 1 << LayerMask.NameToLayer("R_Player"));
-
-            playerHit_down = Physics2D.Raycast(
-            transform.position, Vector2.down,
-            0.6f, 1 << LayerMask.NameToLayer("R_Player"));
-
-            playerHit_left = Physics2D.Raycast(
-            transform.position, Vector2.left,
-            0.6f, 1 << LayerMask.NameToLayer("R_Player"));
-
-
-            if (playerHit_up || playerHit_right || playerHit_down || playerHit_left)
-            {
-                Debug.Log("当たっている");
-                PlayerStatusUp();       //バフがかかる
-            }
-            else
-            {
-                Debug.Log("当たってない");
-            }
-        }
-        if (enemyHitFlg == false)
-        {
-            enemyHit_up = Physics2D.Raycast(
-            transform.position, Vector2.up,
-            0.6f, 1 << LayerMask.NameToLayer("R_Enemy"));
-
-            enemyHit_right = Physics2D.Raycast(
-            transform.position, Vector2.right,
-            0.6f, 1 << LayerMask.NameToLayer("R_Enemy"));
-
-            enemyHit_down = Physics2D.Raycast(
-            transform.position, Vector2.down,
-            0.6f, 1 << LayerMask.NameToLayer("R_Enemy"));
-
-            enemyHit_left = Physics2D.Raycast(
-            transform.position, Vector2.left,
-            0.6f, 1 << LayerMask.NameToLayer("R_Enemy"));
-
-            if (enemyHit_up || enemyHit_right || enemyHit_down || enemyHit_left)
-            {
-                PlayerStan();
-            }
+            statusUpFlg = true;       //バフがかかる
         }
 
-
-    }
-
-    //バフ
-    void PlayerStatusUp()
-    {
-        statusUpFlg = true;
-        speed = 0.05f;      //バフ
-    }
-
-    //バフのクールタイム
-    void StatusUpCoolTime()
-    {
-        //CT 15秒
-        if (0 >= CT - Time.time)
-        {
-            Debug.Log("CT終了");
-            speed = 0.035f;
-            statusUpFlg = false;
-            CT = 10.0f;
-        }
-    }
-
-    //敵にぶつかると一定時間硬直する
-    void PlayerStan()
-    {
-        enemyHitFlg = true;
-
-        if(0 >= 3.0f - Time.time)
-        {
-            enemyHitFlg = false;
-            Debug.Log("スタン終了");
-        }
     }
 
 }
