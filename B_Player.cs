@@ -41,7 +41,7 @@ public class B_Player : MonoBehaviour
 
         move_x = 0.0f;
         move_y = 0.0f;
-        buffSpeed = 0.08f;
+        buffSpeed = 0.04f;
         defaultSpeed = 0.03f;
         speed = defaultSpeed;
 
@@ -51,7 +51,7 @@ public class B_Player : MonoBehaviour
         playerHit_left = false;
 
         statusUpFlg = false;
-        buffTime = 5.0f;
+        buffTime = 10.0f;
         enemyHitFlg = false;
         stanTime = 3.0f;
 
@@ -187,7 +187,6 @@ public class B_Player : MonoBehaviour
         if (LayerMask.LayerToName(other.gameObject.layer) == "R_Enemy")
         {
             enemyHitFlg = true;
-            Debug.Log("敵と当たった");
         }
     }
 }

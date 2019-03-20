@@ -9,6 +9,8 @@ public class R_Player : MonoBehaviour
     private BaseCorutine buff;
     private BaseCorutine stan;
 
+    public SkillEffect effect; 
+
     //移動
     private float move_x;
     private float move_y;
@@ -41,7 +43,7 @@ public class R_Player : MonoBehaviour
 
         move_x = 0.0f;
         move_y = 0.0f;
-        buffSpeed = 0.08f;
+        buffSpeed = 0.04f;
         defaultSpeed = 0.03f;
         speed = defaultSpeed;
 
@@ -51,9 +53,11 @@ public class R_Player : MonoBehaviour
         playerHit_left = false;
 
         statusUpFlg = false;
-        buffTime = 5.0f;
+        buffTime = 10.0f;
         enemyHitFlg = false;
         stanTime = 3.0f;
+
+        effect.Init();
 
     }
 
@@ -156,14 +160,14 @@ public class R_Player : MonoBehaviour
     //バフ開始
     void StatusUpStart()
     {
-        Debug.Log("バフ開始");
         speed = buffSpeed;
+        effect.Init();
+        effect.CutIn();
     }
 
     //バフ終了
     void StatusUpEnd()
     {
-        Debug.Log("バフ終了");
         speed = defaultSpeed;
 
         statusUpFlg = false;
@@ -172,14 +176,12 @@ public class R_Player : MonoBehaviour
     //スタン開始
     void StanStart()
     {
-        Debug.Log("スタン開始");
         enemyHitFlg = true;
     }
 
     //スタン終了
     void StanEnd()
     {
-        Debug.Log("スタン終了");
         enemyHitFlg = false;
     }
     
@@ -190,7 +192,6 @@ public class R_Player : MonoBehaviour
         if (LayerMask.LayerToName(other.gameObject.layer) == "B_Enemy")
         {
             enemyHitFlg = true;
-            Debug.Log("敵と当たった");
         }
     }
 }

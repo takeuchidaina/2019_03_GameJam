@@ -7,12 +7,14 @@ public class Goal : MonoBehaviour
 {
     private bool R_PlayerInGoal;
     private bool B_PlayerInGoal;
+    public bool GoalFlg;
 
     // Start is called before the first frame update
     void Start()
     {
         R_PlayerInGoal = false;
         B_PlayerInGoal = false;
+        GoalFlg = false;
     }
 
     // Update is called once per frame
@@ -20,8 +22,9 @@ public class Goal : MonoBehaviour
     {
         if(R_PlayerInGoal == true && B_PlayerInGoal == true)
         {
+            GoalFlg = true;
             Debug.Log("ゲームクリア―");
-            SceneManager.LoadScene("GameClear");
+            //SceneManager.LoadScene("GameClear");
         }
     }
 
