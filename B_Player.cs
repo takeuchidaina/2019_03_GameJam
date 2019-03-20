@@ -6,11 +6,15 @@ public class B_Player : MonoBehaviour
 {
     public static B_Player instance;
 
+    private BaseCorutine buff;
+    private BaseCorutine stan;
+
     //移動
     private float move_x;
     private float move_y;
     private float speed;
     private float defaultSpeed;
+    private float buffSpeed;
 
     //プレイヤー同士の当たり判定
     private bool playerHit_up;
@@ -20,9 +24,11 @@ public class B_Player : MonoBehaviour
 
     //バフ
     private bool statusUpFlg;
+    private float buffTime;
 
     //スタン
     private bool enemyHitFlg;
+    private float stanTime;
     
 
     // Start is called before the first frame update
@@ -30,8 +36,11 @@ public class B_Player : MonoBehaviour
     {
         instance = this;
 
+        buff = new BaseCorutine();
+
         move_x = 0.0f;
         move_y = 0.0f;
+        buffSpeed = 0.3f;
         defaultSpeed = 0.035f;
         speed = defaultSpeed;
 
@@ -41,7 +50,9 @@ public class B_Player : MonoBehaviour
         playerHit_left = false;
 
         statusUpFlg = false;
+        buffTime = 8.0f;
         enemyHitFlg = false;
+        stanTime = 3.0f;
 
     }
 
@@ -63,19 +74,19 @@ public class B_Player : MonoBehaviour
                 PlayerHit();
             }
         }
-        //硬直
-        else
-        {
-            //スタン
-        }
 
         //速度アップ
         if (statusUpFlg == true)
         {
-            //バフ
+            if (buff.IsProcess)
+            {
+                return;
+            }
+            else
+            {
+                StartCoroutine(buff.OnTimeAction(StatusUpStart,StatusUpEnd,buffTime));
+            }
         }
-
-        Debug.Log("buffのフラグ"+statusUpFlg);
     }
 
     //移動操作
@@ -125,9 +136,51 @@ public class B_Player : MonoBehaviour
         //当たっているなら
         if (playerHit_up || playerHit_right || playerHit_down || playerHit_left)
         {
-            statusUpFlg = true;       //バフがかかる
+            //スタン
+            if (stan.IsProcess)
+            {
+                return;
+            }
+            else
+            {
+                StartCoroutine(buff.OnTimeAction(StanStart, StanEnd, stanTime));
+            }
         }
 
     }
 
+    //バフ開始
+    void StatusUpStart()
+    {
+        speed = buffSpeed;
+    }
+
+    //バフ終了
+    void StatusUpEnd()
+    {
+        speed = defaultSpeed;
+
+        statusUpFlg = false;
+    }
+
+    //スタン開始
+    void StanStart()
+    {
+        enemyHitFlg = true;
+    }
+
+    //スタン終了
+    void StanEnd()
+    {
+        enemyHitFlg = false;
+    }
+
+    //敵との当たり判定
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (LayerMask.LayerToName(other.gameObject.layer) == "R_Enemy")
+        {
+            enemyHitFlg = true;
+        }
+    }
 }

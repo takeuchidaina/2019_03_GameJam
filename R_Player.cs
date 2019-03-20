@@ -6,11 +6,15 @@ public class R_Player : MonoBehaviour
 {
     public static R_Player instance;
 
+    private BaseCorutine buff;
+    private BaseCorutine stan;
+
     //移動
     private float move_x;
     private float move_y;
     private float speed;
     private float defaultSpeed;
+    private float buffSpeed;
 
     //プレイヤー同士の当たり判定
     private bool playerHit_up;
@@ -20,9 +24,11 @@ public class R_Player : MonoBehaviour
 
     //バフ
     private bool statusUpFlg;
+    private float buffTime;
 
     //スタン
     private bool enemyHitFlg;
+    private float stanTime;
 
 
     // Start is called before the first frame update
@@ -30,8 +36,11 @@ public class R_Player : MonoBehaviour
     {
         instance = this;
 
+        buff = new BaseCorutine();
+
         move_x = 0.0f;
         move_y = 0.0f;
+        buffSpeed = 0.05f;
         defaultSpeed = 0.035f;
         speed = defaultSpeed;
 
@@ -41,7 +50,9 @@ public class R_Player : MonoBehaviour
         playerHit_left = false;
 
         statusUpFlg = false;
+        buffTime = 8.0f;
         enemyHitFlg = false;
+        stanTime = 3.0f;
 
     }
 
@@ -63,22 +74,21 @@ public class R_Player : MonoBehaviour
                 PlayerHit();
             }
         }
-        //硬直
-        else
-        {
-            //スタン
-        }
 
         //速度アップ
         if (statusUpFlg == true)
         {
-            //バフ
+            if (buff.IsProcess)
+            {
+                return;
+            }
+            else
+            {
+                StartCoroutine(buff.OnTimeAction(StatusUpStart, StatusUpEnd, buffTime));
+            }
         }
-
-        Debug.Log("buffのフラグ" + statusUpFlg);
     }
 
-    //移動操作
     void PlayerMove()
     {
         if (Input.GetKey(KeyCode.W))
@@ -100,7 +110,6 @@ public class R_Player : MonoBehaviour
 
         //移動の加算
         transform.position += new Vector3(move_x, move_y, 0);
-
     }
 
     //プレイヤー同士の当たり判定
@@ -125,9 +134,56 @@ public class R_Player : MonoBehaviour
         //当たっているなら
         if (playerHit_up || playerHit_right || playerHit_down || playerHit_left)
         {
-            statusUpFlg = true;       //バフがかかる
+            //スタン
+            if (stan.IsProcess)
+            {
+                return;
+            }
+            else
+            {
+                StartCoroutine(buff.OnTimeAction(StanStart, StanEnd, stanTime));
+            }
         }
 
     }
 
+    //バフ開始
+    void StatusUpStart()
+    {
+        Debug.Log("バフ終了");
+        speed = buffSpeed;
+    }
+
+    //バフ終了
+    void StatusUpEnd()
+    {
+        Debug.Log("バフ終了");
+        speed = defaultSpeed;
+
+        statusUpFlg = false;
+    }
+
+    //スタン開始
+    void StanStart()
+    {
+        Debug.Log("スタン開始");
+        enemyHitFlg = true;
+    }
+
+    //スタン終了
+    void StanEnd()
+    {
+        Debug.Log("スタン終了");
+        enemyHitFlg = false;
+    }
+    
+
+    //敵との当たり判定
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (LayerMask.LayerToName(other.gameObject.layer) == "B_Enemy")
+        {
+            enemyHitFlg = true;
+        }
+    }
 }
