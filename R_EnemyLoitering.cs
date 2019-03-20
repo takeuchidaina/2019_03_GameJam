@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class R_EnemyLoitering : MonoBehaviour
 {
-    int[] moveArray = new int[38] {//テンキー方向と一緒のベクトル
+    int[] moveArray = new int[42] {
         2, 2, 2, 2, 2, 2, 2, 2,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
         8, 8, 8, 8, 8, 8, 8, 8,
-        6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
+        6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
     };
     int cnt;
     int cntcnt;//cntを1増やす用のcnt
@@ -18,11 +18,11 @@ public class R_EnemyLoitering : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int[] moveArray = new int[38] {
+        int[] moveArray = new int[42] {
         2, 2, 2, 2, 2, 2, 2, 2,
-        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
         8, 8, 8, 8, 8, 8, 8, 8,
-        6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
+        6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
     };
         /*int cnt = 0;
         int cntcnt = 0;
@@ -39,7 +39,7 @@ public class R_EnemyLoitering : MonoBehaviour
             cntcnt = 0;
             cnt++;
         }
-        if (cnt >= 38)
+        if (cnt >= moveArray.Length)
         {
             cnt = 0;
         }
