@@ -37,6 +37,7 @@ public class R_Player : MonoBehaviour
         instance = this;
 
         buff = new BaseCorutine();
+        stan = new BaseCorutine();
 
         move_x = 0.0f;
         move_y = 0.0f;
@@ -87,6 +88,19 @@ public class R_Player : MonoBehaviour
                 StartCoroutine(buff.OnTimeAction(StatusUpStart, StatusUpEnd, buffTime));
             }
         }
+
+        //スタン
+        if (enemyHitFlg == true)
+        {
+            if (stan.IsProcess)
+            {
+                return;
+            }
+            else
+            {
+                StartCoroutine(buff.OnTimeAction(StanStart, StanEnd, stanTime));
+            }
+        }
     }
 
     void PlayerMove()
@@ -134,15 +148,7 @@ public class R_Player : MonoBehaviour
         //当たっているなら
         if (playerHit_up || playerHit_right || playerHit_down || playerHit_left)
         {
-            //スタン
-            if (stan.IsProcess)
-            {
-                return;
-            }
-            else
-            {
-                StartCoroutine(buff.OnTimeAction(StanStart, StanEnd, stanTime));
-            }
+            statusUpFlg = true;
         }
 
     }
